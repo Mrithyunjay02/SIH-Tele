@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { Link, useLocation, Outlet } from 'react-router-dom'; // Import Outlet
 import '../../styles/DashboardLayout.css';   // go up two levels
@@ -52,3 +53,16 @@ const DoctorLayout = () => {
 
 export default DoctorLayout;
 
+=======
+import React from "react";
+
+const DoctorDashboard = () => {
+  return (
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <h1 className="text-4xl font-bold text-gray-800">Doctor Dashboard</h1>
+    </div>
+  );
+};
+
+export default DoctorDashboard;
+>>>>>>> a897f2986e788b9057e6e7cd7c12591748942da2
