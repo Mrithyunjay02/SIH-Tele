@@ -1,5 +1,4 @@
 # app/routes/admin_routes.py
-
 from flask import Blueprint, jsonify
 from app.models.user_model import User
 from app.models.ehr_model import EHR
@@ -10,7 +9,7 @@ admin_routes = Blueprint('admin_routes', __name__)
 
 # ✅ View all doctors
 @admin_routes.route('/doctors', methods=['GET'])
-@token_required
+@token_required  #decorator
 @role_required('admin')
 def get_all_doctors(current_user):
     doctors = User.query.filter_by(role='doctor').all()

@@ -1,5 +1,7 @@
 # app/auth/auth.py
 import os
+import secrets
+import datetime
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask import request, jsonify
 from app.auth.jwt_handler import generate_token
@@ -7,11 +9,12 @@ from app.auth.validators import VALID_ROLES
 from app.extensions import db
 from app.models.user_model import User
 from email_validator import validate_email, EmailNotValidError
+from app.notifications.email_service import send_password_reset_email
 
 # --- Constants for better readability and maintainability ---
 ALLOWED_REGISTER_FIELDS = {"name", "email", "password", "role", "admin_secret"}
 REQUIRED_REGISTER_FIELDS = {"name", "email", "password", "role"}
-
+RESET_TOKEN_LIFETIME_HOURS = 1 # Define how long the reset link is valid
 
 def _validate_registration_data(data):
     """
@@ -92,13 +95,16 @@ def login_user():
     if not email or not password:
         return jsonify({"error": "Email and password are required"}), 400
 
-    # ✅ Step 2: Retrieve user and verify credentials
-    # Sanitize email before querying for consistency
+    # ✅ Step 2: Retrieve user by email
     user = User.query.filter_by(email=email.strip().lower()).first()
-    if not user or not check_password_hash(user.password, password):
-        return jsonify({"error": "Invalid credentials"}), 401
+    if not user:
+        return jsonify({"error": "Email does not exist"}), 401
 
-    # ✅ Step 3: Generate and return JWT token
+    # ✅ Step 3: Verify password
+    if not check_password_hash(user.password, password):
+        return jsonify({"error": "Incorrect password"}), 401
+
+    # ✅ Step 4: Generate and return JWT token
     token = generate_token(user.id, user.role)
 
     return jsonify({
@@ -107,3 +113,73 @@ def login_user():
         "name": user.name,
         "user_id": user.id
     }), 200
+
+
+def forgot_password():
+    """
+    Handles the request to initiate a password reset.
+    Generates a unique token and sends a password reset link.
+    """
+    data = request.get_json()
+    email = data.get("email", "").strip().lower()
+
+    if not email:
+        return jsonify({"error": "Email is required"}), 400
+
+    user = User.query.filter_by(email=email).first()
+
+    # Security measure: Always return a non-specific success message to prevent email enumeration.
+    if user:
+        # Generate a secure, URL-safe token
+        token = secrets.token_urlsafe(32)
+        
+        # Set token expiration
+        token_expiration = datetime.datetime.now() + datetime.timedelta(hours=RESET_TOKEN_LIFETIME_HOURS)
+
+        # Update the user record with the new token and expiration
+        user.reset_token = token
+        user.reset_token_expiration = token_expiration
+        db.session.commit()
+
+        # Construct the full reset URL using an environment variable for security and maintainability
+        base_url = os.getenv("FRONTEND_URL", "http://localhost:5173")
+        reset_link = f"{base_url}/reset-password?token={token}"
+
+        send_password_reset_email(user.email, reset_link)
+
+    return jsonify({"message": "If an account with that email exists, a password reset link has been sent."}), 200
+
+
+def reset_password():
+    """
+    Handles the password reset request.
+    Validates the token, updates the password, and invalidates the token.
+    """
+    data = request.get_json()
+    token = data.get("token")
+    new_password = data.get("newPassword")
+
+    if not token or not new_password:
+        return jsonify({"error": "Token and new password are required"}), 400
+
+    # Find the user by the token
+    user = User.query.filter_by(reset_token=token).first()
+
+    if not user or user.reset_token_expiration < datetime.datetime.now():
+        # Invalidate the token if it's expired or invalid to prevent future attempts
+        if user:
+            user.reset_token = None
+            user.reset_token_expiration = None
+            db.session.commit()
+        return jsonify({"error": "Invalid or expired token."}), 400
+
+    # Hash the new password and update the user record
+    hashed_password = generate_password_hash(new_password, method='pbkdf2:sha256')
+    user.password = hashed_password
+    
+    # Invalidate the token immediately after a successful reset
+    user.reset_token = None
+    user.reset_token_expiration = None
+    db.session.commit()
+
+    return jsonify({"message": "Password has been successfully reset."}), 200

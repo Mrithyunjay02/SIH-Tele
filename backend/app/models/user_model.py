@@ -12,3 +12,5 @@ class User(db.Model):
     # Add both relationships and tell SQLAlchemy which FK to use
     patient_ehrs = db.relationship('EHR', backref='patient', lazy=True, foreign_keys='EHR.user_id')
     doctor_ehrs = db.relationship('EHR', backref='doctor', lazy=True, foreign_keys='EHR.created_by')
+    reset_token = db.Column(db.String(255), nullable=True)
+    reset_token_expiration = db.Column(db.DateTime, nullable=True)

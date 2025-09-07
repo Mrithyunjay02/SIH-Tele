@@ -1,11 +1,13 @@
 # app/__init__.py
 from flask import Flask
+from flask_cors import CORS
 from config import Config
 from app.extensions import db
 from app.routes.appointment_routes import appointment_bp
 
 def create_app():
     app = Flask(__name__)
+    CORS(app)  # Enable CORS
     app.config.from_object(Config)
 
     db.init_app(app)

@@ -1,0 +1,265 @@
+/* --- SEHAT SAATHI DASHBOARD STYLES --- */
+
+/* 1. ROOT VARIABLES & FONT SETUP
+   We define our design system here: colors, fonts, and spacing.
+   This makes the entire UI consistent and easy to update.
+*/
+:root {
+    --font-primary: 'Inter', sans-serif;
+    --primary-blue: #2563EB;
+    --primary-blue-dark: #1D4ED8;
+    --background-dark: #111827; /* bg-gray-900 */
+    --content-dark: #1F2937;    /* bg-gray-800 */
+    --border-color: #374151;   /* bg-gray-700 */
+    --text-primary: #F9FAFB;     /* text-gray-50 */
+    --text-secondary: #9CA3AF;   /* text-gray-400 */
+    --accent-red: #DC2626;
+    --accent-green: #10B981;
+    --shadow-color: rgba(0, 0, 0, 0.25);
+    --shadow-glow-blue: rgba(59, 130, 246, 0.4);
+}
+
+/* Apply the primary font to the entire application */
+body {
+    font-family: var(--font-primary);
+    background-color: var(--background-dark);
+    color: var(--text-primary);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow-x: hidden;
+}
+
+/* --- 2. KEYFRAME ANIMATIONS --- */
+
+/* For elements to fade in and slide up smoothly */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* A subtle pulse for important stats or notifications */
+@keyframes pulse {
+    0%, 100% {
+        transform: scale(1);
+    }
+    50% {
+        transform: scale(1.05);
+    }
+}
+
+/* Shimmering effect for loading skeletons */
+@keyframes shimmer {
+    0% {
+        background-position: -1000px 0;
+    }
+    100% {
+        background-position: 1000px 0;
+    }
+}
+
+/* Subtle background gradient animation for special elements */
+@keyframes gradient-animation {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* --- 3. CUSTOM UTILITY CLASSES --- */
+
+/* Apply this class to any element you want to animate on load */
+.animate-fade-in-up {
+    animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Apply this for an attention-grabbing pulse effect */
+.animate-pulse-slow {
+    animation: pulse 2.5s infinite ease-in-out;
+}
+
+/* A beautiful animated gradient text effect */
+.text-gradient-animated {
+    background: linear-gradient(90deg, var(--primary-blue), #34D399, var(--primary-blue));
+    background-size: 200% 200%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: gradient-animation 4s ease infinite;
+}
+
+/* --- 4. CUSTOM COMPONENT STYLING --- */
+
+/* Overall Dashboard Layout */
+.dashboard-layout {
+    display: flex;
+    height: 100vh;
+    background-color: var(--background-dark);
+}
+
+/* Sidebar Enhancements */
+.sidebar {
+    background-color: var(--content-dark);
+    border-right: 1px solid var(--border-color);
+    transition: width 0.3s ease;
+}
+
+.sidebar-link {
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    color: var(--text-secondary);
+    font-weight: 500;
+    transition: all 0.2s ease-in-out;
+}
+
+.sidebar-link:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+    color: var(--text-primary);
+}
+
+.sidebar-link-active {
+    background-color: var(--primary-blue);
+    color: var(--text-primary);
+    box-shadow: 0 4px 14px 0 var(--shadow-glow-blue);
+}
+
+.sidebar-link-active svg {
+    transform: scale(1.1);
+}
+
+/* Main Content Area */
+.main-content {
+    flex: 1;
+    padding: 2.5rem;
+    overflow-y: auto;
+}
+
+/* Professional Card Styling */
+.dashboard-card {
+    background-color: var(--content-dark);
+    border: 1px solid var(--border-color);
+    border-radius: 1rem; /* More rounded */
+    padding: 1.5rem;
+    box-shadow: 0 4px 6px var(--shadow-color);
+    transition: all 0.3s ease;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px var(--shadow-color);
+    border-color: var(--primary-blue);
+}
+
+.card-title {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: var(--text-secondary);
+}
+
+.card-value {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--text-primary);
+}
+
+/* Enhanced Button Styles */
+.btn-primary {
+    background-color: var(--primary-blue);
+    color: white;
+    font-weight: 600;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px 0 var(--shadow-glow-blue);
+    border: none;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-blue-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px 0 var(--shadow-glow-blue);
+}
+
+.btn-secondary {
+    background-color: var(--border-color);
+    color: white;
+    font-weight: 500;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.btn-secondary:hover {
+    background-color: #4B5563; /* gray-600 */
+}
+
+
+/* Table Styling for Patient/Appointment Lists */
+.professional-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.professional-table th,
+.professional-table td {
+    padding: 100rem 1.5rem;
+    text-align: left;
+}
+
+.professional-table thead {
+    background-color: rgba(31, 41, 55, 0.5); /* Semi-transparent bg-gray-800 */
+    border-bottom: 1px solid var(--border-color);
+}
+
+.professional-table th {
+    font-weight: 600;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    font-size: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.professional-table tbody tr {
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.2s ease;
+}
+
+.professional-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.professional-table tbody tr:hover {
+    background-color: rgba(55, 65, 81, 0.5); /* Semi-transparent bg-gray-700 */
+}
+
+/* Custom Scrollbar for a polished look */
+.main-content::-webkit-scrollbar {
+    width: 8px;
+}
+
+.main-content::-webkit-scrollbar-track {
+    background: var(--background-dark);
+}
+
+.main-content::-webkit-scrollbar-thumb {
+    background-color: var(--border-color);
+    border-radius: 10px;
+    border: 2px solid var(--background-dark);
+}
+
+.main-content::-webkit-scrollbar-thumb:hover {
+    background-color: #4B5563; /* gray-600 */
+}
+
+/* Final Touches: Headers */
+h1, h2, h3, h4, h5, h6 {
+    font-weight: 700;
+}
