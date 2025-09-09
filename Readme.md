@@ -28,3 +28,7 @@ A cloud-based electronic health record (EHR) management system built to improve 
 | Backend   | Python Flask, JWT Auth |
 | Database  | SQLite (development), SQLAlchemy ORM |
 | Extras    | Email Service (Gmail SMTP), Postman for API testing |
+
+
+
+Homie passed Tap academy
