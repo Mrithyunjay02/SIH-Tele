@@ -2,9 +2,9 @@ import smtplib
 import os
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
-from dotenv import load_dotenv
+#from dotenv import load_dotenv
 
-load_dotenv()  # Load environment variables from .env
+# load_dotenv()  # Load environment variables from .env
 
 EMAIL_USER = os.getenv('EMAIL_USER')
 EMAIL_PASS = os.getenv('EMAIL_PASS')

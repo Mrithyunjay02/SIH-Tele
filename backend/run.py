@@ -2,10 +2,10 @@ import os
 from app import create_app
 from app.extensions import db
 from flask_migrate import Migrate
-from dotenv import load_dotenv
+# from dotenv import load_dotenv
 
 # Load environment variables from the .env file
-load_dotenv()
+# load_dotenv()
 
 # Create the Flask application instance
 app = create_app()

@@ -1,13 +1,253 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Your Account - Swasthya Sahayak</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <style>
+        /* --- General Styles --- */
+        :root {
+            --primary-color: #2a7a7b; /* A trustworthy teal/blue */
+            --secondary-color: #004d40;
+            --background-color: #f4f7f6;
+            --card-background: #ffffff;
+            --text-color: #333333;
+            --heading-color: #004d40;
+            --button-text-color: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 2rem 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* --- Header Section --- */
+        .header-container {
+            text-align: center;
+            max-width: 800px;
+            margin-bottom: 3rem;
+        }
+
+        .header-container h1 {
+            font-size: 2.5rem;
+            color: var(--heading-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header-container p {
+            font-size: 1.1rem;
+            color: #555;
+        }
+
+        /* --- Main Content Layout --- */
+        .registration-container {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        /* --- Individual Role Cards --- */
+        .role-card {
+            background-color: var(--card-background);
+            border-radius: 12px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.07);
+            border: 1px solid #e0e0e0;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .role-card .icon {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .role-card h2 {
+            font-size: 1.5rem;
+            color: var(--heading-color);
+            margin-top: 0;
+        }
+
+        .role-card .description {
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+            flex-grow: 1; /* Pushes button to the bottom */
+        }
+        
+        .details-section {
+            text-align: left;
+            margin-bottom: 2rem;
+        }
+
+        .details-section h3 {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            border-bottom: 2px solid #e0e0e0;
+            padding-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .details-section ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .details-section li {
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .details-section li::before {
+            content: '✓';
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-right: 0.5rem;
+        }
+
+        /* --- Call-to-Action Button --- */
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--button-text-color);
+            font-size: 1rem;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+            margin-top: auto; /* Aligns button to the bottom */
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+        
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .registration-container {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .registration-container {
+                grid-template-columns: 1fr;
+            }
+            .header-container h1 {
+                font-size: 2rem;
+            }
+        }
+
+    </style>
+</head>
+<body>
+
+    <header class="header-container">
+        <h1>Join Our Community for a Healthier Nabha</h1>
+        <p>Choose your role below to get started. Registration is simple, secure, and the first step towards accessible healthcare for everyone.</p>
+    </header>
+
+    <main class="registration-container">
+        <section class="role-card">
+            <div class="icon"><i class="fa-solid fa-users"></i></div>
+            <h2>Simple & Secure Health Access</h2>
+            <p class="description">Our registration is designed for everyone. You can sign up yourself, or a family member or local ASHA worker can help you.</p>
+            
+            <div class="details-section">
+                <h3>Information You'll Need</h3>
+                <ul>
+                    <li>Mobile Number (Verified with OTP)</li>
+                    <li>Full Name, Age, and Gender</li>
+                    <li>Village/Town (Select from a simple list)</li>
+                    <li>A simple 4-Digit PIN for login</li>
+                </ul>
+                <h3>Optional (Add Later)</h3>
+                <ul>
+                    <li>Aadhaar number for a health ID</li>
+                    <li>Link family members (children & elders)</li>
+                </ul>
+                 <h3>Special Features</h3>
+                <ul>
+                    <li>Works Offline: Access records without internet</li>
+                    <li>Assisted Registration: Get help from an ASHA worker</li>
+                </ul>
+            </div>
+            <a href="#" class="cta-button">Register as a Patient</a>
+        </section>
+
+        <section class="role-card">
+            <div class="icon"><i class="fa-solid fa-briefcase-medical"></i></div>
+            <h2>Empowering Community Health</h2>
+            <p class="description">As a trusted health liaison, you are a vital part of our platform. Register to manage patient profiles in your area and help bring healthcare to their doorstep.</p>
+            
+            <div class="details-section">
+                <h3>Information You'll Need</h3>
+                <ul>
+                    <li>Full Name & Mobile Number (OTP Verified)</li>
+                    <li>Official ASHA ID / Employee ID</li>
+                    <li>Your Assigned Village/Area</li>
+                    <li>A Secure PIN for app access</li>
+                </ul>
+                <h3>Our Verification Process</h3>
+                <ul>
+                    <li>You Register: Fill in your details.</li>
+                    <li>We Verify: Your ID is confirmed.</li>
+                    <li>Account Activated: Get "ASHA Mode" access.</li>
+                </ul>
+            </div>
+            <a href="#" class="cta-button">Join Our ASHA Network</a>
+        </section>
+
+        <section class="role-card">
+            <div class="icon"><i class="fa-solid fa-user-doctor"></i></div>
+            <h2>Provide Care Where It's Needed Most</h2>
+            <p class="description">Join our network of verified medical professionals. Our platform is fully compliant with the National Medical Commission (NMC) Telemedicine Guidelines.</p>
+            
+            <div class="details-section">
+                <h3>Credentials for Verification</h3>
+                <ul>
+                    <li>Full Name, Mobile Number, and Email</li>
+                    <li>State Medical Council Registration Number</li>
+                    <li>Specialization & Highest Qualification</li>
+                </ul>
+                <h3>Required Document Uploads</h3>
+                <ul>
+                    <li>Medical Council Registration Certificate</li>
+                    <li>Degree Certificate(s)</li>
+                    <li>A recent profile photograph</li>
+                </ul>
+                <h3>Our Professional Vetting Process</h3>
+                <ul>
+                    <li>Submit Form: Upload your documents.</li>
+                    <li>Manual Review: We verify your credentials.</li>
+                    <li>Profile Approved: Start consultations.</li>
+                </ul>
+            </div>
+            <a href="#" class="cta-button">Doctor's Registration</a>
+        </section>
+    </main>
+
+</body>
 </html>
